@@ -23,8 +23,7 @@ void paddle_init(int top, int bot, int col, char ch) {
 }
 
 void paddle_up() {
-    if(paddle.top > 1){
-        // Erase current
+    if(paddle.top > 1) {
         for(int y = paddle.top; y <= paddle.bot; y++){
             move(y, paddle.col);
             addch(' ');
@@ -36,8 +35,7 @@ void paddle_up() {
 }
 
 void paddle_down() {
-    if(paddle.bot < LINES - 2){
-        // Erase current
+    if(paddle.bot < LINES - 2) {
         for(int y = paddle.top; y <= paddle.bot; y++){
             move(y, paddle.col);
             addch(' ');
