@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include "paddle.h"
 
-// Functions from ball.c
+// From ball.c
 void init_ball_and_walls(int right_wall_col, int paddle_col);
 void move_ball_once(int right_wall_col, int paddle_col);
 void wrap_up(void);
