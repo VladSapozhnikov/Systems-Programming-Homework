@@ -7,7 +7,7 @@ static struct {
 } paddle;
 
 static void draw_paddle(void) {
-    for(int y = paddle.top; y <= paddle.bot; y++){
+    for (int y = paddle.top; y <= paddle.bot; y++) {
         move(y, paddle.col);
         addch(paddle.ch);
     }
@@ -22,11 +22,9 @@ void paddle_init(int top, int bot, int col, char ch) {
     draw_paddle();
 }
 
-// Move paddle up by one row if possible
 void paddle_up() {
-    if(paddle.top > 1) {
-        // Erase old paddle
-        for(int y = paddle.top; y <= paddle.bot; y++){
+    if (paddle.top > 1) {
+        for (int y = paddle.top; y <= paddle.bot; y++) {
             move(y, paddle.col);
             addch(' ');
         }
@@ -36,11 +34,9 @@ void paddle_up() {
     }
 }
 
-// Move paddle down by one row if possible
 void paddle_down() {
-    if(paddle.bot < LINES - 2) {
-        // Erase old paddle
-        for(int y = paddle.top; y <= paddle.bot; y++){
+    if (paddle.bot < LINES - 2) {
+        for (int y = paddle.top; y <= paddle.bot; y++) {
             move(y, paddle.col);
             addch(' ');
         }
@@ -50,7 +46,6 @@ void paddle_down() {
     }
 }
 
-// True if the (y, x) point is occupied by the paddle
 int paddle_contact(int y, int x) {
     return (x == paddle.col && y >= paddle.top && y <= paddle.bot);
 }
