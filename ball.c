@@ -52,17 +52,20 @@ static int bounce_or_miss() {
 
 void set_up() {
     initscr();
+    start_color();
+    init_pair(1, COLOR_BLACK, COLOR_WHITE);
+    bkgd(COLOR_PAIR(1));
     cbreak();
     noecho();
     keypad(stdscr, TRUE);
     srand(getpid());
     clear();
-    for(int i=0; i<COLS-1; i++){
-        move(0,i); addch('-');
-        move(LINES-1,i); addch('-');
+    for(int i = 0; i < COLS-1; i++){
+        move(0, i); addch('-');
+        move(LINES-1, i); addch('-');
     }
-    for(int j=0; j<LINES; j++){
-        move(j,0); addch('|');
+    for(int j = 0; j < LINES; j++){
+        move(j, 0); addch('|');
     }
     refresh();
 }
