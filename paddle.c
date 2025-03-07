@@ -6,8 +6,8 @@ static struct pppaddle {
     char pad_char;
 } paddle;
 
-static void draw_paddle() {
-    for(int y = paddle.pad_top; y <= paddle.pad_bot; y++) {
+static void draw_paddle(void) {
+    for(int y = paddle.pad_top; y <= paddle.pad_bot; y++){
         move(y, paddle.pad_col);
         addch(paddle.pad_char);
     }
@@ -23,8 +23,9 @@ void paddle_init(int top, int bot, int col, char ch) {
 }
 
 void paddle_up() {
-    if(paddle.pad_top > 1) {
-        for(int y = paddle.pad_top; y <= paddle.pad_bot; y++) {
+    if(paddle.pad_top > 1){
+        // Erase current
+        for(int y = paddle.pad_top; y <= paddle.pad_bot; y++){
             move(y, paddle.pad_col);
             addch(' ');
         }
@@ -35,8 +36,9 @@ void paddle_up() {
 }
 
 void paddle_down() {
-    if(paddle.pad_bot < LINES - 2) {
-        for(int y = paddle.pad_top; y <= paddle.pad_bot; y++) {
+    if(paddle.pad_bot < LINES - 2){
+        // Erase current
+        for(int y = paddle.pad_top; y <= paddle.pad_bot; y++){
             move(y, paddle.pad_col);
             addch(' ');
         }
