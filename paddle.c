@@ -35,7 +35,7 @@ void paddle_up() {
 }
 
 void paddle_down() {
-    if(paddle.pad_bot < LINES-2) {
+    if(paddle.pad_bot < LINES - 2) {
         for(int y = paddle.pad_top; y <= paddle.pad_bot; y++) {
             move(y, paddle.pad_col);
             addch(' ');

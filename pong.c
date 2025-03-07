@@ -11,14 +11,14 @@ int is_finished();
 int get_balls_left();
 
 int main() {
-    int ch;
     set_up();
     start_game();
-    paddle_init(LINES/2 - 2, LINES/2 + 2, 5, '#');
+    // Paddle near the right edge, 5 rows tall
+    paddle_init(LINES/2 - 2, LINES/2 + 2, COLS - 2, '#');
     nodelay(stdscr, TRUE);
 
     while(!is_finished()) {
-        ch = getch();
+        int ch = getch();
         if(ch == 'Q' || ch == 'q') break;
         if(ch == 'j') paddle_down();
         if(ch == 'k') paddle_up();
@@ -26,7 +26,6 @@ int main() {
         usleep(30000);
         if(!get_balls_left()) break;
     }
-
     wrap_up();
     return 0;
 }
