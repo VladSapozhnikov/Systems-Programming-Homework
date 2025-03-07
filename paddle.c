@@ -1,13 +1,12 @@
 #include <curses.h>
 #include "paddle.h"
 
-// Simple structure to store paddle info
 static struct {
-    int top, bot, col; // top row, bottom row, and column of the paddle
-    char ch;           // character to draw for paddle
+    int top, bot, col;
+    char ch;
 } paddle;
 
-// Draws the entire paddle
+// Draw the entire paddle at its current position
 static void draw_paddle(void) {
     for(int y = paddle.top; y <= paddle.bot; y++){
         move(y, paddle.col);
@@ -28,7 +27,7 @@ void paddle_init(int top, int bot, int col, char ch) {
 // Move paddle up by one row if possible
 void paddle_up() {
     if(paddle.top > 1) {
-        // Erase the old paddle
+        // Erase current paddle
         for(int y = paddle.top; y <= paddle.bot; y++){
             move(y, paddle.col);
             addch(' ');
@@ -42,7 +41,7 @@ void paddle_up() {
 // Move paddle down by one row if possible
 void paddle_down() {
     if(paddle.bot < LINES - 2) {
-        // Erase the old paddle
+        // Erase current paddle
         for(int y = paddle.top; y <= paddle.bot; y++){
             move(y, paddle.col);
             addch(' ');
