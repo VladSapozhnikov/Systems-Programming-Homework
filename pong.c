@@ -2,36 +2,18 @@
 #include <unistd.h>
 #include "paddle.h"
 
-// Functions from ball.c
+// From ball.c
 void set_up(void);
 void wrap_up(void);
 void move_ball(void);
 void start_game(void);
-int is_finished(void);
-int get_balls_left(void);
+int  is_finished(void);
+int  get_balls_left(void);
 
 int main() {
     set_up();
     start_game();
 
-    // Place paddle near the left side, about 5 columns in
-    paddle_init(LINES/2 - 2, LINES/2 + 2, 5, '#');
-
-    // Non-blocking input
-    nodelay(stdscr, TRUE);
-
-    while(!is_finished()) {
-        int ch = getch();
-        if(ch == 'Q' || ch == 'q') break;
-        if(ch == 'j') paddle_down();
-        if(ch == 'k') paddle_up();
-
-        move_ball();
-        usleep(30000);
-
-        if(!get_balls_left()) break;
-    }
-
-    wrap_up();
-    return 0;
-}
+    // Paddle at about 3/4 of screen width => "halfway back" from the far-right
+    int paddle_col = (3 * COLS) / 4;
+    // Paddle 5 rows tall around the vertical 

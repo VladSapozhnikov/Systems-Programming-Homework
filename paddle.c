@@ -1,53 +1,53 @@
 #include <curses.h>
 #include "paddle.h"
 
-static struct pppaddle {
-    int pad_top, pad_bot, pad_col;
-    char pad_char;
+static struct {
+    int top, bot, col;
+    char ch;
 } paddle;
 
 static void draw_paddle(void) {
-    for(int y = paddle.pad_top; y <= paddle.pad_bot; y++){
-        move(y, paddle.pad_col);
-        addch(paddle.pad_char);
+    for(int y = paddle.top; y <= paddle.bot; y++){
+        move(y, paddle.col);
+        addch(paddle.ch);
     }
     refresh();
 }
 
 void paddle_init(int top, int bot, int col, char ch) {
-    paddle.pad_top = top;
-    paddle.pad_bot = bot;
-    paddle.pad_col = col;
-    paddle.pad_char = ch;
+    paddle.top = top;
+    paddle.bot = bot;
+    paddle.col = col;
+    paddle.ch  = ch;
     draw_paddle();
 }
 
 void paddle_up() {
-    if(paddle.pad_top > 1){
+    if(paddle.top > 1){
         // Erase current
-        for(int y = paddle.pad_top; y <= paddle.pad_bot; y++){
-            move(y, paddle.pad_col);
+        for(int y = paddle.top; y <= paddle.bot; y++){
+            move(y, paddle.col);
             addch(' ');
         }
-        paddle.pad_top--;
-        paddle.pad_bot--;
+        paddle.top--;
+        paddle.bot--;
         draw_paddle();
     }
 }
 
 void paddle_down() {
-    if(paddle.pad_bot < LINES - 2){
+    if(paddle.bot < LINES - 2){
         // Erase current
-        for(int y = paddle.pad_top; y <= paddle.pad_bot; y++){
-            move(y, paddle.pad_col);
+        for(int y = paddle.top; y <= paddle.bot; y++){
+            move(y, paddle.col);
             addch(' ');
         }
-        paddle.pad_top++;
-        paddle.pad_bot++;
+        paddle.top++;
+        paddle.bot++;
         draw_paddle();
     }
 }
 
 int paddle_contact(int y, int x) {
-    return (x == paddle.pad_col && y >= paddle.pad_top && y <= paddle.pad_bot);
+    return (x == paddle.col && y >= paddle.top && y <= paddle.bot);
 }
