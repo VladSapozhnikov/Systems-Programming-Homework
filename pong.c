@@ -11,17 +11,21 @@ int  is_finished(void);
 int  get_balls_left(void);
 
 int main() {
+    // Initialize everything
     set_up();
     start_game();
 
-    // Place paddle around column 15, vertically centered
-    int col = 15;
+    // Push the racket back only a little bit near the right side:
+    // We'll place it at col=COLS-5, vertical size ~5
+    int paddle_col = COLS - 5;
     int top = (LINES / 2) - 2;
     int bot = (LINES / 2) + 2;
-    paddle_init(top, bot, col, '#');
+    paddle_init(top, bot, paddle_col, '#');
 
+    // Non-blocking input
     nodelay(stdscr, TRUE);
 
+    // Main loop
     while(!is_finished()) {
         int ch = getch();
         if(ch == 'Q' || ch == 'q') break;
@@ -31,6 +35,7 @@ int main() {
         usleep(30000);
         if(!get_balls_left()) break;
     }
+
     wrap_up();
     return 0;
 }
