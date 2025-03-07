@@ -4,10 +4,8 @@
 #include "paddle.h"
 
 /*
-  Updated so that:
-   - The ball bounces off the paddle (#) if it contacts it.
-   - Score increases only when the ball bounces off the paddle.
-   - Left wall tiles still disappear when hit, but no score is awarded.
+  Points are now awarded ONLY when the ball hits a tile from the left wall.
+  If the ball bounces off the paddle, no points are added.
 */
 
 static struct {
@@ -96,15 +94,16 @@ void move_ball_once(int right_wall_col, int paddle_col) {
         ball.y_dir = -1;
 
     if(ball.x <= 0) {
-        if(leftWall[ball.y] == 1)
+        if(leftWall[ball.y] == 1) {
             leftWall[ball.y] = 0;
+            score++;
+            show_score();
+        }
         ball.x_dir = 1;
     }
     else if(ball.x == paddle_col) {
         if(paddle_contact(ball.y, paddle_col)) {
             ball.x_dir = -1;
-            score++;
-            show_score();
         }
     }
     else if(ball.x >= right_wall_col) {
@@ -143,7 +142,7 @@ void init_ball_and_walls(int right_wall_col, int paddle_col) {
 
 void redraw_boundaries_and_paddle(int right_wall_col, int paddle_col) {
     draw_walls(right_wall_col, paddle_col);
-    show_score();
+
 }
 
 void wrap_up(void) {
