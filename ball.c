@@ -6,6 +6,7 @@
 /*
   In this version, a point is awarded only when the ball was hit by the paddle
   and then it hits a tile on the left wall.
+  The score counter is displayed on the top left.
 */
 
 static struct {
@@ -22,21 +23,21 @@ static int leftWall[2000]; // 1 = tile exists, 0 = removed
 static int paddleHit = 0;  // Set to 1 when the paddle hits the ball
 
 static void draw_walls(int right_wall_col, int paddle_col) {
-    // Top and bottom boundaries on row 1 and LINES-1
+    // Draw top and bottom boundaries on row 1 and LINES-1
     for (int i = 0; i < COLS; i++){
         move(1, i);
         addch('-');
         move(LINES - 1, i);
         addch('-');
     }
-    // Left wall tiles (rows 2 to LINES-2)
+    // Draw left wall tiles (rows 2 to LINES-2)
     for (int y = 2; y < LINES - 1; y++){
         if (leftWall[y])
             move(y, 0), addch('|');
         else
             move(y, 0), addch(' ');
     }
-    // Right wall (behind paddle)
+    // Draw right wall behind the paddle
     for (int j = 1; j < LINES; j++){
         move(j, right_wall_col);
         addch('|');
@@ -46,9 +47,8 @@ static void draw_walls(int right_wall_col, int paddle_col) {
 static void show_score(void) {
     char buf[20];
     snprintf(buf, sizeof(buf), "Score: %d", score);
-    int pos = COLS - 15;
-    if (pos < 0) pos = 0;
-    move(0, pos);
+    // Display score at the top left, starting at column 1.
+    move(0, 1);
     printw("%s", buf);
     refresh();
 }
@@ -106,7 +106,7 @@ void move_ball_once(int right_wall_col, int paddle_col) {
     else if(ball.y >= LINES - 2)
         ball.y_dir = -1;
 
-    // Left wall: if ball hits x<=0
+    // When the ball hits the left wall:
     if(ball.x <= 0) {
         if(ball.y >= 2 && ball.y < LINES - 1 && leftWall[ball.y] == 1 && paddleHit == 1) {
             leftWall[ball.y] = 0;
@@ -123,7 +123,7 @@ void move_ball_once(int right_wall_col, int paddle_col) {
             paddleHit = 1;
         }
     }
-    // Right wall bounce
+    // Bounce off the right wall behind the paddle.
     else if(ball.x >= right_wall_col) {
         ball.x_dir = -1;
     }
